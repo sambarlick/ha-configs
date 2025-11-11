@@ -156,75 +156,38 @@ mqtt:
         model: "Cerbo GX",
         name: "Cerbo GX"}
 
-    #Inverter Mode
-    - state_topic: "victron/N/c0619ab9478b/vebus/276/Mode"
-      name: "Inverter Mode"
-      unique_id: c6aaa910-76a3-4faf-8c9f-00feebb0245e
-      icon: mdi:generator-portable
-      value_template: >
-        {% if value_json.value == 1 %}
-          Charger Only
-        {% elif value_json.value == 2 %}
-          Inverter Only
-        {% elif value_json.value == 3 %}
-          On
-        {% elif value_json.value == 4 %}
-          Off
-        {% else %}
-          Error - No Data
-        {% endif %}
-      device: {
-        identifiers: [
-          "Cerbo GX"
-        ],
-        manufacturer: "Victron Energy",
-        model: "Cerbo GX",
-        name: "Cerbo GX"}
-
     #Inverter State
     - state_topic: "victron/N/c0619ab9478b/vebus/276/State"
       unique_id: 23390d7b-ad47-4d3b-9f14-8e00b7fbea1f
       icon: mdi:lightning-bolt
       name: "Inverter State"
-      value_template: >
-        {% if value_json.value == 0 %}
-          Off
-        {% elif value_json.value == 1 %}
-          Low Power
-        {% elif value_json.value == 2 %}
-          Fault
-        {% elif value_json.value == 3 %}
-          Bulk
-        {% elif value_json.value == 4 %}
-          Absorption
-        {% elif value_json.value == 5 %}
-          Float
-        {% elif value_json.value == 6 %}
-          Storage
-        {% elif value_json.value == 7 %}
-          Equalize
-        {% elif value_json.value == 8 %}
-          Passthrough
-        {% elif value_json.value == 9 %}
-          Inverting
-        {% elif value_json.value == 10 %}
-          Power Assist
-        {% elif value_json.value == 11 %}
-          Power Supply
-        {% elif value_json.value == 244 %}
-          Sustain
-        {% elif value_json.value == 252 %}
-          External Control
-        {% else %}
-          Error - No Data
-        {% endif %}
       device: {
         identifiers: [
           "Cerbo GX"
         ],
         manufacturer: "Victron Energy",
         model: "Cerbo GX",
-        name: "Cerbo GX"}
+        name: "Cerbo GX"
+      }
+      value_template: >-
+        {% set mapping = {
+            "0": "Off",
+            "1": "Low Power",
+            "2": "Fault",
+            "3": "Bulk",
+            "4": "Absorption",
+            "5": "Float",
+            "6": "Storage",
+            "7": "Equalize",
+            "8": "Passthrough",
+            "9": "Inverting",
+            "10": "Power Assist",
+            "11": "Power Supply",
+            "244": "Sustain",
+            "252": "External Control"
+          } %}
+        {% set state = value_json.value | string %}
+        {{ mapping[state] | default('Error - No Data') }}
 
     #Input AC Current Limit
     - state_topic: "victron/N/c0619ab9478b/vebus/276/Ac/In/1/CurrentLimit"
@@ -313,7 +276,6 @@ mqtt:
         name: "Cerbo GX"}
 
     ## BATTERIES
-
     #SOC
     - state_topic: "victron/N/c0619ab9478b/system/0/Dc/Battery/Soc"
       name: "Battery SoC"
@@ -423,7 +385,6 @@ mqtt:
 
 
     ## SOLAR
-
     #Solar Voltage
     - state_topic: "victron/N/c0619ab9478b/solarcharger/279/Dc/0/Voltage"
       name: "Solar Voltage"
