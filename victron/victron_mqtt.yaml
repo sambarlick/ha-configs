@@ -122,7 +122,6 @@ mqtt:
 
   sensor:
     ## SYSTEM
-        
     #Elec Cabinet Tempertature
     - state_topic: "victron/N/c0619ab9478b/temperature/20/Temperature"
       name: "Elec Cabinet Temperature"
@@ -497,7 +496,6 @@ mqtt:
       }
 
     ## ALTERNATOR
-
     #Alternator Current
     - state_topic: "victron/N/c0619ab9478b/alternator/0/Dc/0/Current"
       name: "Alternator Current"
