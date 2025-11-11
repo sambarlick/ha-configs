@@ -188,21 +188,6 @@ mqtt:
         {% set state = value_json.value | string %}
         {{ mapping[state] | default('Error - No Data') }}
 
-    #Input AC Current Limit
-    - state_topic: "victron/N/c0619ab9478b/vebus/276/Ac/In/1/CurrentLimit"
-      name: "Active Input Current Limit"
-      unique_id: 9bfbf09f-9344-43ae-941a-24f9584bb2a0
-      unit_of_measurement: "A"
-      device_class: current
-      value_template: '{{ value_json.value }}'
-      device: {
-        identifiers: [
-          "Cerbo GX"
-        ],
-        manufacturer: "Victron Energy",
-        model: "Cerbo GX",
-        name: "Cerbo GX"}
-
     #AC Consumption
     - state_topic: "victron/N/c0619ab9478b/system/0/Ac/Consumption/L1/Power"
       name: "AC Consumption"
